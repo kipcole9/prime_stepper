@@ -1,4 +1,6 @@
 defmodule Prime do
+  import Schism
+
   # Generate a series of primes in the range and
   # then compare each prime with the next
   def compare(range, step \\ 2) when is_map(range) do
@@ -54,12 +56,41 @@ defmodule Prime do
     acc
   end
 
-  # Brute force prime checker
-  def is_prime?(1), do: false
-  def is_prime?(x), do: is_prime?(x, 2)
-  def is_prime?(x, n) when n < x and rem(x, n) == 0, do: false
-  def is_prime?(x, n) when n < x, do: is_prime?(x, n + 1)
-  def is_prime?(_x, _n), do: true
+  schism "prime check" do
+    dogma "brute force" do
+      def is_prime?(1), do: false
+      def is_prime?(x), do: is_prime?(x, 2)
+      def is_prime?(x, n) when n < x and rem(x, n) == 0, do: false
+      def is_prime?(x, n) when n < x, do: is_prime?(x, n + 1)
+      def is_prime?(_x, _n), do: true
+    end
+
+    heresy "brute force below sqrt(n)" do
+      def is_prime?(1), do: false
+      def is_prime?(x), do: is_prime?(x, 2, round(:math.sqrt(x)))
+      def is_prime?(x, n, root) when n <= root and rem(x, n) == 0, do: false
+      def is_prime?(x, n, root) when n <= root, do: is_prime?(x, n + 1, root)
+      def is_prime?(_x, _n, _root), do: true
+    end
+
+    heresy "code wars" do
+      def is_prime?(g) do
+        stream = Stream.filter(2..round(:math.sqrt(g)), fn x -> rem(g, x) == 0 end)
+        length(Enum.take(stream, 1)) <= 0
+      end
+    end
+
+    heresy "wikipedia" do
+      def is_prime?(n) when n <= 1, do: false
+      def is_prime?(n) when n <= 3, do: true
+      def is_prime?(n) when rem(n, 2) == 0 or rem(n, 3) == 0, do: false
+      def is_prime?(n), do: is_prime?(n, 5, round(:math.sqrt(n)))
+
+      def is_prime?(n, i, root) when i <= root and rem(n, i) == 0 or rem(n, i + 2) == 0, do: false
+      def is_prime?(n, i, root) when i <= root, do: is_prime?(n, i + 6, root)
+      def is_prime?(_n, _i, _root), do: true
+    end
+  end
 
   # From the web
   def first_1000_primes do
