@@ -1,21 +1,8 @@
-# Prime
+# Prime Stepper
+Coding fun, nothing to see here.
 
-**TODO: Add description**
+Use:
 
-## Installation
-
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed
-by adding `prime` to your list of dependencies in `mix.exs`:
-
-```elixir
-def deps do
-  [
-    {:prime, "~> 0.1.0"}
-  ]
-end
-```
-
-Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
-and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
-be found at [https://hexdocs.pm/prime](https://hexdocs.pm/prime).
+`Prime.generate(range)` to generate prime numbers
+`Prime.compare(range, step)` to return a tuple list of primes that are `step` difference from each other
 
