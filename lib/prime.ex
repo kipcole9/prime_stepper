@@ -56,22 +56,10 @@ defmodule Prime do
 
   # Brute force prime checker
   def is_prime?(1), do: false
-
-  def is_prime?(x) do
-    is_prime?(x, 2)
-  end
-
-  def is_prime?(x, n) when n < x do
-    if rem(x, n) == 0 do
-      false
-    else
-      is_prime?(x, n + 1)
-    end
-  end
-
-  def is_prime?(_x, _n) do
-    true
-  end
+  def is_prime?(x), do: is_prime?(x, 2)
+  def is_prime?(x, n) when n < x and rem(x, n) == 0, do: false
+  def is_prime?(x, n) when n < x, do: is_prime?(x, n + 1)
+  def is_prime?(_x, _n), do: true
 
   # From the web
   def first_1000_primes do
