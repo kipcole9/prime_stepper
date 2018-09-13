@@ -1,49 +1,4 @@
 defmodule Prime do
-  def generate(range) do
-    Enum.reduce(range, [], fn
-      x, acc when x < 2 -> acc
-      x, acc when rem(x, 2) == 0 -> acc
-      x, acc -> if is_prime?(x), do: [x | acc], else: acc
-    end)
-  end
-
-  def generate2(range) do
-    range
-    |> Enum.to_list
-    |> sieve([])
-  end
-
-  def sieve([a | rest], acc) do
-    if is_prime?(a) do
-      Enum.reject(rest, fn x -> rem(x, a) == 0 end)
-      |> sieve([a | acc])
-    else
-      sieve(rest, acc)
-    end
-  end
-
-  def sieve([], acc) do
-    acc
-  end
-
-  def is_prime?(1), do: false
-
-  def is_prime?(x) do
-    is_prime?(x, 2)
-  end
-
-  def is_prime?(x, n) when n < x do
-    if rem(x, n) == 0 do
-      false
-    else
-      is_prime?(x, n + 1)
-    end
-  end
-
-  def is_prime?(_x, _n) do
-    true
-  end
-
   # Generate a series of primes in the range and
   # then compare each prime with the next
   def compare(range, step \\ 2) when is_map(range) do
@@ -69,6 +24,55 @@ defmodule Prime do
     acc
   end
 
+  # Generate a series of primes
+  def generate(range) do
+    Enum.reduce(range, [], fn
+      x, acc when x < 2 -> acc
+      x, acc when rem(x, 2) == 0 -> acc
+      x, acc -> if is_prime?(x), do: [x | acc], else: acc
+    end)
+  end
+
+  # Use sieve of Eratosthenes
+  def generate2(range) do
+    range
+    |> Enum.to_list
+    |> sieve([])
+  end
+
+  def sieve([a | rest], acc) do
+    if is_prime?(a) do
+      Enum.reject(rest, fn x -> rem(x, a) == 0 end)
+      |> sieve([a | acc])
+    else
+      sieve(rest, acc)
+    end
+  end
+
+  def sieve([], acc) do
+    acc
+  end
+
+  # Brute force prime checker
+  def is_prime?(1), do: false
+
+  def is_prime?(x) do
+    is_prime?(x, 2)
+  end
+
+  def is_prime?(x, n) when n < x do
+    if rem(x, n) == 0 do
+      false
+    else
+      is_prime?(x, n + 1)
+    end
+  end
+
+  def is_prime?(_x, _n) do
+    true
+  end
+
+  # From the web
   def first_1000_primes do
       [  2 ,     3 ,    5  ,    7 ,   11 ,   13 ,   17 ,   19 ,   23 ,   29 ,
         31 ,    37 ,   41  ,   43 ,   47 ,   53 ,   59 ,   61 ,   67 ,   71 ,
