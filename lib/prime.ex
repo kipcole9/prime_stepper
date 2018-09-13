@@ -42,7 +42,8 @@ defmodule Prime do
 
   def sieve([a | rest], acc) do
     if is_prime?(a) do
-      Enum.reject(rest, fn x -> rem(x, a) == 0 end)
+      rest
+      |> Enum.reject(fn x -> rem(x, a) == 0 end)
       |> sieve([a | acc])
     else
       sieve(rest, acc)
