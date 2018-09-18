@@ -38,6 +38,7 @@ defmodule Dimensions do
         |> ignore(x)
         |> ignore(whitespace)
         |> concat(float)
+        |> ignore(whitespace)
 
       def parse_profile(s) do
         {:ok, [x, y], _, _, _, _} = profile(s)
