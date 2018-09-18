@@ -22,7 +22,8 @@ defmodule Prime.MixProject do
   defp deps do
     [
       {:schism, git: "https://github.com/tmbb/schism"},
-      {:benchee, "~> 0.13"}
+      {:benchee, "~> 0.13"},
+      {:nimble_parsec, "~> 0.4"}
     ]
   end
 end
